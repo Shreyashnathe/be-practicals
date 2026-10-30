@@ -1,5 +1,4 @@
-import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.util.*;
 
 public class HuffmanEncoding {
     static class Node {
@@ -21,6 +20,7 @@ public class HuffmanEncoding {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        sc.nextLine(); // Consume the newline character
         int choice;
         do {
             System.out.println("\n1. Generate Huffman codes\n0. Exit");

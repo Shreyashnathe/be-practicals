@@ -1,3 +1,5 @@
+// Design an n-Queens matrix with the first queen already placed; use backtracking to place the remaining queens. 
+
 import java.util.Scanner;
 
 public class NQueensFirstQueen {
