@@ -4,14 +4,14 @@ pragma solidity ^0.8.20;
 
 contract StudentData {
 
-    // Structure to hold student information
+    // Structure
     struct Student {
         uint id;
         string name;
         uint age;
     }
 
-    // Dynamic array to store students
+    // Dynamic array
     Student[] public students;
 
     // Fallback function
@@ -20,14 +20,12 @@ contract StudentData {
     // Receive function
     receive() external payable {}
 
-    // Function to add a student
-    function addStudent(string memory _name, uint _age) public {
-        uint studentId = students.length;
-
-        students.push(Student(studentId, _name, _age));
+    // Add student
+    function addStudent(uint _id, string memory _name, uint _age) public {
+        students.push(Student(_id, _name, _age));
     }
 
-    // Function to retrieve student information
+    // Get student details
     function getStudent(uint _id)
         public
         view
@@ -40,7 +38,7 @@ contract StudentData {
         return (student.id, student.name, student.age);
     }
 
-    // Function to get total number of students
+    // Get total students
     function getStudentCount() public view returns (uint) {
         return students.length;
     }
