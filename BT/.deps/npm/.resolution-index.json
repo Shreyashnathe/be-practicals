@@ -1,0 +1,18 @@
+{
+  "BAnk.sol": {
+    "__sources__": {
+      "BAnk.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.20;\r\n\r\ncontract Bank {\r\n\r\n    mapping(address => uint) public balance;\r\n\r\n    // Deposit money\r\n    function deposit() public payable {\r\n        require(msg.value > 0, \"Enter some ETH\");\r\n        balance[msg.sender] += msg.value;\r\n    }\r\n\r\n    // Withdraw money\r\n    function withdraw(uint amount) public {\r\n        require(amount > 0, \"Invalid amount\");\r\n        require(balance[msg.sender] >= amount, \"Insufficient balance\");\r\n\r\n        balance[msg.sender] -= amount;\r\n\r\n        (bool success, ) = payable(msg.sender).call{value: amount}(\"\");\r\n        require(success, \"Transfer failed\");\r\n    }\r\n\r\n    // Show balance\r\n    function showBalance() public view returns (uint) {\r\n        return balance[msg.sender];\r\n    }\r\n}",
+        "file": "BAnk.sol"
+      }
+    }
+  },
+  "Student.sol": {
+    "__sources__": {
+      "Student.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\ncontract StudentData {\r\n    struct Student {\r\n        uint256 id;\r\n        string name;\r\n        uint256 age;\r\n    }\r\n\r\n    Student[] public students; // Array to store students\r\n    mapping(uint256 => uint256) public studentIndex; // Mapping to track student index by ID\r\n\r\n    event StudentAdded(uint256 id, string name, uint256 age); // Event for new student added\r\n\r\n    // Function to add a new student\r\n    function addStudent(uint256 _id, string memory _name, uint256 _age) public {\r\n        require(studentIndex[_id] == 0, \"Student ID already exists.\"); // Ensure unique ID\r\n\r\n        students.push(Student(_id, _name, _age)); // Add student to array\r\n        studentIndex[_id] = students.length; // Store index\r\n        emit StudentAdded(_id, _name, _age); // Emit event\r\n    }\r\n\r\n    // Function to get student details by ID\r\n    function getStudent(uint256 _id) public view returns (uint256, string memory, uint256) {\r\n        require(studentIndex[_id] != 0, \"Student not found.\"); // Ensure student exists\r\n\r\n        Student memory student = students[studentIndex[_id] - 1]; // Retrieve student\r\n        return (student.id, student.name, student.age);\r\n    }\r\n\r\n    // Fallback function to accept Ether\r\n    fallback() external payable {\r\n        // Functionality for receiving Ether can be added here\r\n    }\r\n    receive() external payable {\r\n    }\r\n    // Function to retrieve contract balance\r\n    function getBalance() public view returns (uint256) {\r\n        return address(this).balance; // Return contract balance\r\n    }\r\n}",
+        "file": "Student.sol"
+      }
+    }
+  }
+}
